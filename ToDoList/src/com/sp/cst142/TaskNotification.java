@@ -1,11 +1,17 @@
 package com.sp.cst142;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.widget.Toast;
 
 public class TaskNotification extends Activity{
 
@@ -14,11 +20,10 @@ public class TaskNotification extends Activity{
 	//Unique notification ID (will match it's Task's id)
 	private int notificationId;
 	
-//	public TaskNotification(String title, int id)
-//	{
-//		this.title = title;
-//		notificationId = id;
-//	}
+	//ALARM EXPERIMENTS  
+	private BroadcastReceiver br;
+	private AlarmManager am;
+	private PendingIntent alarmIntent;
 	
 	@Override
 	protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -26,13 +31,40 @@ public class TaskNotification extends Activity{
 		Intent i = getIntent();
 		title = i.getStringExtra("title");
 		notificationId = i.getIntExtra("id", -1);
+		createAlarm();
 		createNotification();
 		
 	};
 	
+	private void createAlarm() {
+		//ALARM EXPERIMENT
+		//broadcast receiver acts as callback for the alarm
+		br = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				// TODO Auto-generated method stub
+			Toast.makeText(context, "Hey the alarm went off!", Toast.LENGTH_LONG).show();	
+			}
+		};
+		registerReceiver(br, new IntentFilter("com.sp.cst142"));
+		alarmIntent = PendingIntent.getBroadcast(this, 0, new Intent("com.sp.cst142"), 0); 
+		am = (AlarmManager)(this.getSystemService(Context.ALARM_SERVICE));
+		//Set the alarm     This will wakeup device			Time to trigger     		what to do
+		am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, System.currentTimeMillis() + 1000, alarmIntent);
+		//SystemClock.elapsedRealtime() + 5000 <-- cut from time to trigger
+	}
+	//AlarmManager needs some cleanup so take care of it in onDestroy
+//	@Override
+//	protected void onDestroy() {
+//		am.cancel(alarmIntent);
+//		unregisterReceiver(br);
+//		super.onDestroy();
+//	}
+
 	//Create the notification
 	protected void createNotification()
 	{
+
 		//Get NotificationManager
 		NotificationManagerCompat notifyMgr = NotificationManagerCompat.from(this); 
 		//Build notification
