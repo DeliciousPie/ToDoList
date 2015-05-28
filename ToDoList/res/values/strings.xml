@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ToDoList</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="strTaskName">Task</string>
+    <string name="strTaskDetails">Details</string>
+    <string name="strTaskTime">Time</string>
+    <string name="strTaskNameHint">Name for your task</string>
+    <string name="strBtnNew">New</string>
+    <string name="strDelete">Delete</string>
+    <string name="strBtnSave">Save</string>
+    <string name="strIdLabel">Task ID</string>
+    <string name="strNumberOfTask">You have X  pending tasks</string>
+    <string name="strTVCurrentLocation">Current Location</string>
+    <string name="strDefaultLocationMessage">Location Not Yet Found...</string>
+    <string name="strLongitudeLabel">Longitude</string>
+    <string name="strLattitude">Latitude</string>
+    <string name="activity_NSA">NSA Activity</string>
+    <string name="activity_task_notification">Task Notification Activity</string>
+
+</resources>
